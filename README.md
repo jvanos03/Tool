@@ -1,6 +1,6 @@
 # Marker Gene Extraction Tool
 
-A Python script that takes a phylogenetic structure as csv file and a large number of conserved gene alignments.
+A Python script that takes a phylogenetic structure as csv file and a large number of gene alignments.
 Herafter it identifies a subselection of genes (=<10) capable of recovering the phylogenetic structure used as input.
 
 ## About this Project
