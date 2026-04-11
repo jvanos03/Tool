@@ -15,4 +15,4 @@ It focuses on ease of use and applicability for other unresolved or revised taxo
 
 ## Technologies used:
 *   **Python (Currently Jupyter Notebook)** 
-*   **Pandas, Numpy, Counter, Seaborn** 
+*   **Pandas, Numpy, Counter, Seaborn, SeqIO** 
