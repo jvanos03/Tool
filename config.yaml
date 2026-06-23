@@ -1,0 +1,19 @@
+#config.yaml
+
+#folder containing the gene alignments
+alignment_folder: "input/Analysis_Folder/"
+
+#csv file indicating the taxonomic structure
+structure_csv: "input/Isolates_species_clades.csv"
+
+#destination folder for the output
+output_folder: "output/"
+
+#required ratio of isolates within species/clades to be considered a diagnostic position
+threshold: 1.0
+
+#maximum number of marker genes allowed (!currently not used!)
+max_genes: 8
+
+#extension after gene names (used for saving the markers to a txt file)
+extension: "_MSA_trimmed.fna"

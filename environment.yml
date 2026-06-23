@@ -1,0 +1,12 @@
+name: markertool
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.10
+  - biopython
+  - numpy
+  - pandas
+  - seaborn
+  - matplotlib
+  - pyyaml
