@@ -13,6 +13,19 @@ It focuses on ease of use and applicability for other unresolved or revised taxo
 *  conda activate markertool
 *  python markerfinder.py config.yml
 
+### Input
+*  Directory containing Multiple Sequence Alignment (MSA) files
+*  .csv file indicating the phylogenetic structure (clade - species - isolate_ID; OR: species - isolate_ID)
+
+### Output
+Directory containing:
+*  .csv file containing a diagnostic positions per gene per taxon matrix
+*  .csv file containing a gene information matrix
+*  .csv file containing a per taxon descriptive statistics matrix
+*  .csv file containing an advanced gene information matrix
+*  .txt file containing the selection of marker genes
+*  .png file containing a heatmap of the marker genes diagnostic sites per taxon
+
 ### Important Functions:
 *   **Per-site alignment analysis** 
 *   **Diagnostic site identification** 
