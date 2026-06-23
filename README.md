@@ -7,6 +7,12 @@ Herafter it identifies a subselection of genes (=<10) capable of recovering the 
 I started this project as part of my Bachelor Thesis in order to find new marker genes for a novel phylogenetic structure based off of 2000+ conserved genes. 
 It focuses on ease of use and applicability for other unresolved or revised taxonomies. 
 
+### Usage
+  #Bash
+conda create env -f environment.yml
+conda activate markertool
+python markerfinder.py config.yml
+
 ### Important Functions:
 *   **Per-site alignment analysis** 
 *   **Diagnostic site identification** 
@@ -16,3 +22,4 @@ It focuses on ease of use and applicability for other unresolved or revised taxo
 ## Technologies used:
 *   **Python (Currently Jupyter Notebook)** 
 *   **Pandas, Numpy, Counter, Seaborn, SeqIO** 
+
