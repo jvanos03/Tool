@@ -11,7 +11,7 @@ It focuses on ease of use and applicability for other unresolved or revised taxo
   #Bash
 *  conda create env -f environment.yml
 *  conda activate markertool
-*  python markerfinder.py config.yml
+*  python markerfinder.py config.yaml
 
 ### Input
 *  Directory containing Multiple Sequence Alignment (MSA) files
