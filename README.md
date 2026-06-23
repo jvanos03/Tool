@@ -20,6 +20,6 @@ It focuses on ease of use and applicability for other unresolved or revised taxo
 *   **Automated marker gene selection**
 
 ## Technologies used:
-*   **Python (Currently Jupyter Notebook)** 
+*   **Python** 
 *   **Pandas, Numpy, Counter, Seaborn, SeqIO** 
 
