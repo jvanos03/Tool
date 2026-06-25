@@ -8,8 +8,8 @@ alignment_folder: "input/Analysis_Folder/"
 #!!IMPORTANT!! level name must match exactly: clade, species, id
 structure_csv: "input/Isolates_species_clades.csv"
 
-#destination folder for the output
-output_folder: "output/"
+#destination folder for the output (will be created if it does not exist)
+output_folder: "output_markerfinder/"
 
 #required ratio of isolates within species/clades to be considered a diagnostic position
 threshold: 1.0
