@@ -4,6 +4,8 @@
 alignment_folder: "input/Analysis_Folder/"
 
 #csv file indicating the taxonomic structure
+#!IMPORtANT! first row of csv file must indicate level 
+#!!IMPORTANT!! level name must match exactly: clade, species, id
 structure_csv: "input/Isolates_species_clades.csv"
 
 #destination folder for the output
