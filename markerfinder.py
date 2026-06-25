@@ -160,7 +160,7 @@ def get_parsimony_informative_positions(alignment_array):
     Parameters
     ----------
     alignment_array : np.ndarray
-        2D array of aligned sequences (n_sequences × n_positions)
+        2D array of aligned sequences (n_sequences x n_positions)
     
     Returns
     -------
@@ -243,46 +243,58 @@ def find_unique_positions(alignment_array, parsimony_informative_positions, clad
     results = [] #Create empty list 
     threshold = ratio_threshold #Define the threshold of percentage of taxa within a species/clade to have the same nucleotide 
 
+    nested = any(isinstance(v, dict) for v in clade_indices.values()) #Check if we are working with a nested dictionary
+
+    #Make the species indices dictionaries identical for both nested and normal dictionaries
+    if nested is True:
+        species_index_pairs = [(species, indices)
+                            for species_dict in clade_indices.values()
+                            for species, indices in species_dict.items()
+                            ]
+    else:
+        species_index_pairs = clade_indices.items()
+
     for position_nr in parsimony_informative_positions: #For every informative position
         position = position_nr + 1 #Fix index number to actual position in the alignment
         column = alignment_array[:, position_nr] #Take the single column
-        # --- Clade-level analysis ---
-        for clade, species_dict in clade_indices.items(): #For every Clade:
-            clade_indices_list = [i for indices in species_dict.values() for i in indices] #Extract the indices of sequences of members of clade
-            clade_states = column[clade_indices_list] #Convert the indices into the actual nucleotides and save them in a 1D numpy array
 
-            counts = Counter(clade_states) #Count the occurence of nucleotides 
-            most_common_nt, count = counts.most_common(1)[0] #Identify the most common nucleotide
+        if nested is True:
+            # --- Clade-level analysis ---
+            for clade, species_dict in clade_indices.items(): #For every Clade:
+                clade_indices_list = [i for indices in species_dict.values() for i in indices] #Extract the indices of sequences of members of clade
+                clade_states = column[clade_indices_list] #Convert the indices into the actual nucleotides and save them in a 1D numpy array
 
-            if count / len(clade_states) >= threshold: #Check if the clade has the same nucleotide for the required threshold
-                clade_unique_nt = most_common_nt #Extract the nucleotide 
-                clade_other_indices = [i for i in range(len(seq_ids)) if i not in clade_indices_list] #Extract the alternative nucleotides
-                if clade_unique_nt not in column[clade_other_indices]: #If clade nucleotide is not in the alternative nucleotides:
-                    results.append({
-                        "Position": position,
-                        "Taxon": clade,
-                        "Nucleotide": clade_unique_nt,
-                        "Alternative": set(column[clade_other_indices])
-                    })
-
-        # --- Species-level analysis ---
-        for clade, species_dict in clade_indices.items(): #For every species dictionary
-            for species, indices in species_dict.items(): #For every index number in species dictionary
-                species_states = column[indices] #Convert indices into actual nucleotides and save them in a 1D numpy array
-
-                counts = Counter(species_states) #Count the occurence of nucleotides
+                counts = Counter(clade_states) #Count the occurence of nucleotides 
                 most_common_nt, count = counts.most_common(1)[0] #Identify the most common nucleotide
 
-                if count / len(species_states) >= threshold: #Check if the species has the same nucleotide for the required threshold 
-                    species_unique_nt = most_common_nt #Extract the nucleotide 
-                    species_other_indices = [i for i in range(len(seq_ids)) if i not in indices] #Extract the alternative nucleotides
-                    if species_unique_nt not in column[species_other_indices]: #If clade nucleotide is not in the alternative nucleotides:
+                if count / len(clade_states) >= threshold: #Check if the clade has the same nucleotide for the required threshold
+                    clade_unique_nt = most_common_nt #Extract the nucleotide 
+                    clade_other_indices = [i for i in range(len(seq_ids)) if i not in clade_indices_list] #Extract the alternative nucleotides
+                    if clade_unique_nt not in column[clade_other_indices]: #If clade nucleotide is not in the alternative nucleotides:
                         results.append({
                             "Position": position,
-                            "Taxon": species,
-                            "Nucleotide": species_unique_nt,
-                            "Alternative": set(column[species_other_indices])
+                            "Taxon": clade,
+                            "Nucleotide": clade_unique_nt,
+                            "Alternative": set(column[clade_other_indices])
                         })
+
+        # --- Species-level analysis ---
+        for species, indices in species_index_pairs: #For every index number in species dictionary
+            species_states = column[indices] #Convert indices into actual nucleotides and save them in a 1D numpy array
+
+            counts = Counter(species_states) #Count the occurence of nucleotides
+            most_common_nt, count = counts.most_common(1)[0] #Identify the most common nucleotide
+
+            if count / len(species_states) >= threshold: #Check if the species has the same nucleotide for the required threshold 
+                species_unique_nt = most_common_nt #Extract the nucleotide 
+                species_other_indices = [i for i in range(len(seq_ids)) if i not in indices] #Extract the alternative nucleotides
+                if species_unique_nt not in column[species_other_indices]: #If clade nucleotide is not in the alternative nucleotides:
+                    results.append({
+                        "Position": position,
+                        "Taxon": species,
+                        "Nucleotide": species_unique_nt,
+                        "Alternative": set(column[species_other_indices])
+                    })
 
     results_df = pd.DataFrame(results)
     return results_df
